@@ -27,7 +27,7 @@ nowNumb = 0
 
 selectedLanguage = True
 
-nowLanguage = []
+nowLanguage = ["en", "English"]
 
 #the Threading is needed, so it doesnt kill the main window
 #*crashes anyways*
