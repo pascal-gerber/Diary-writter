@@ -25,6 +25,8 @@ sure = False
 selectedNumber = True
 nowNumb = 0
 
+selectedLanguage = True
+
 nowLanguage = []
 
 #the Threading is needed, so it doesnt kill the main window
