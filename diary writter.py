@@ -1,7 +1,8 @@
+from autocorrect import Speller
 from tkinter import *
 from docx import *
 import json
-from autocorrect import Speller
+import pathlib
 
 spell = Speller(lang='en')
 
@@ -18,19 +19,37 @@ def deleteall():
         mydoc = Document()
         mydoc.save("diary.docx")
         DeleteStuff.configure(text="Deleted")
-        change = open("CurrentDay.txt", "w")
-        change.write("1")
+        change = open("day today.json", "w")
+        change.write("")
         change.close()
         
     sure = not sure
 
+
 def writeContent(content):
     global window
-    with open("CurrentDay.txt", "r") as file:
-        Today = int(file.read())
+    #########
+    theFile = pathlib.Path("day today.json")
 
-    with open("CurrentDay.txt", "w") as file:
-        file.write(str(Today + 1))
+    if not theFile.exists():
+        theFile.write_text("{}")
+        dayToday = {"today": 0}
+
+    with open('day today.json', "r") as File:
+        try:
+            dayToday = json.load(File)
+        except:
+            theFile.write_text("{}")
+            dayToday = {"today": 0}
+            
+
+    print(dayToday)
+
+    with open('day today.json', 'w') as File:
+        dayToday["today"] += 1
+        json.dump(dayToday, File, indent=2)
+
+    #########
 
     correctedsentance = ""
 
@@ -40,9 +59,10 @@ def writeContent(content):
     info = Label(window, text="Your Update has been submitted")
     info.grid(row = 2, column = 0)
     mydoc = Document("diary.docx")
-    mydoc.add_heading("Day :" + str(Today), 0)
+    mydoc.add_heading("Day :" + str(dayToday["today"]), 0)
     mydoc.add_paragraph(correctedsentance)
     mydoc.save("diary.docx")
+
 
 def createWindow():
     global window
