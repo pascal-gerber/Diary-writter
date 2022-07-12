@@ -121,8 +121,6 @@ def writeContent(content):
             dayToday = {"today": 0}
             
 
-    print(dayToday)
-
     with open('day today.json', 'w') as File:
         dayToday["today"] += 1
         json.dump(dayToday, File, indent=2)
